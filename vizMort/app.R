@@ -62,7 +62,7 @@ print(N())
      #Autoscale vs Manual point scaling
      if(input$scalepts==F){pts<-input$pointcex}else{
        #slightly different models for pt size before &after 9999
-           if(N()<500){pts=1.9*exp(-1*N())+.1}else{pts=(.011-.045)/(10e3-500)*N()+.046789}
+           if(N()<500){pts=1.9*exp(-1*N())+.1}else{pts=.05*exp(-.0009*N())+.01}# Old linear approximation: pts=(.01-.045)/(25e3-500)*N()+.045714
      }
        
        
@@ -84,14 +84,14 @@ print(N())
      
      print(pts)
      #####The tricky part: if N>100k
-     if(N()>1000000){
-       binmagnitude<-round(log10(N()))-3
-       g <- g+stat_summary_2d()
-     }
+     # if(N()>1000000){
+     #   binmagnitude<-round(log10(N()))-3
+     #   g <- g+stat_summary_2d()
+     # }
      
      
      # ttl<-substitute( paste(frac(k,N),warn),list(k=format(k, big.mark=",", scientific=FALSE),N=format(N, big.mark=",", scientific=FALSE),warn=warn))
-     ttl<-paste(N(),"Deaths")
+     ttl<-paste(format(N(), big.mark=",", scientific=FALSE),"Deaths")
      
      g<-g+ ggtitle(ttl)+theme(plot.title = element_text(hjust = 0.5,size=34,face="bold",colour="#011627",family="serif"))#,plot.background = element_rect(colour = '#011627',size=1)
      G$plot<-g #assign reactive value
